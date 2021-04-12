@@ -1,0 +1,30 @@
+{
+  "name": "curiexplore-paysage",
+  "version": "0.0.1",
+  "description": "Récupération des données pays de Paysage pour les rendre accessibles depuis une API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dataesr/curieXplore-paysage.git"
+  },
+  "author": "Equipe DOAD",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dataesr/curieXplore-paysage/issues"
+  },
+  "homepage": "https://github.com/dataesr/curieXplore-paysage#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongodb": "^3.6.6",
+    "node-cron": "^3.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
