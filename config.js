@@ -1,10 +1,21 @@
-exports.port = 3001;
+import { MongoClient } from 'mongodb';
 
-// for docker
-exports.mongoUrl = 'mongodb://172.16.0.1:27017';
+const port = 3000;
 
-// local : 
-// exports.mongoUrl = 'mongodb://localhost:27017';
+const mongoUrl = 'mongodb://mongo:27017';
 
-// Paysage
-exports.paysageUrl = 'https://paysage.mesri.fr/CurieXplore/Json/';
+const paysageUrl = 'https://paysage.mesri.fr/CurieXplore/Json/';
+
+const mongo = new MongoClient(
+  mongoUrl,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  },
+);
+mongo.connect();
+const db = mongo.db('curieXplore');
+
+export {
+  mongoUrl, mongo, port, paysageUrl, db,
+};

@@ -1,35 +1,30 @@
-version: '2'
-
+version: '3'
 services:
-  cocoa-back:
-    image : dataesr/cocoa-back:1.0
-    #build: .
-    networks:
-      mongo_net:
+  users:
+    build:
+      context: .
     ports:
-      - '3001:3001'
-    links:
-      - mongo
-  
+      - 3000:3000
+    command: npm run start
+    volumes:
+      - '.:/usr/src/app'
+    networks:
+      - curieXplore-paysage
   mongo:
     image: mongo
+    restart: always
     volumes:
-    - data-volume:/data/db
-    ports:
-      - "27017:27017"
+      - mongodb:/data/db
     networks:
-      mongo_net:
-        ipv4_address: 172.16.0.1
-    command: mongod --bind_ip 127.0.0.1,172.16.0.1
-
-
+      - curieXplore-paysage
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    networks:
+      - curieXplore-paysage
 networks:
-  mongo_net:
-    driver: bridge
-    ipam:
-      config:
-      - subnet: 172.16.0.0/24
-        gateway: 172.16.0.254
-
+  curieXplore-paysage:
 volumes:
-  data-volume:
+  mongodb:

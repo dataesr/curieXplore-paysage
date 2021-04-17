@@ -1,6 +1,7 @@
 const cron = require('node-cron');
-const { loadCountries } = require('./controllers/load-countries');
+// const { loadCountries } = require('./controllers/load-countries');
 
-cron.schedule('* * * * *', function() {
-    loadCountries();
-  });
+cron.schedule('* * * * *', () => {
+  console.log('test');
+  // loadCountries();
+});

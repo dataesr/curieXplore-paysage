@@ -1,13 +1,19 @@
-const express = require('express');
-const cors = require('cors');
+import express from 'express';
+import cors from 'cors';
+import routes from './routes';
+import { port } from './config';
 
 const app = express();
-const routes = require('./routes');
-const config = require('./config.js');
 
-app.use(routes);
 app.use(cors());
+// const corsOptions = {
+//   origin: 'http://localhost:3001',
+//   optionsSuccessStatus: 200 // For legacy browser support
+// }
 
-app.listen(config.port, () => 
-  console.log(`App is listening on port ${config.port}`)
-);
+// app.use(cors(corsOptions));
+app.use(routes);
+
+app.listen(port, () => {
+  console.log(`App is listening on port ${port}`);
+});

@@ -1,11 +1,10 @@
-const express = require('express');
+import { Router } from 'express';
+import loadCountries from './controllers/load-countries';
+import findCountry from './controllers/paysage';
 
-const router = express.Router();
+const router = Router();
 
-const loadCountriesControler = require('./controllers/load-countries');
-const paysageControler = require('./controllers/paysage');
+router.get('/load-countries', loadCountries);
+router.get('/paysage/:id', findCountry);
 
-router.route('/load-countries').get(loadCountriesControler.loadCountries);
-router.route('/paysage/:id').get(paysageControler.findCountry);
-
-module.exports = router;
+export default router;
