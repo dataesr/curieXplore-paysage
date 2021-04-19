@@ -1,0 +1,13 @@
+# name: Reload data from paysage
+#
+# on:
+#   schedule:
+#     - cron : '0 1 * * *'
+#
+# jobs:
+#   reload-data:
+#     runs-on: ubuntu:latest
+#     name: Relaod data from paysage
+#     steps:
+#       - name: curl endpoint
+#         run: curl -X GET https://curie-countries.dataesr.ovh
