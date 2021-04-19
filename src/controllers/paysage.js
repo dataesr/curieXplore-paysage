@@ -1,7 +1,6 @@
-import { db } from '../config';
+import { db } from '../mongo';
 
 export default async (req, res) => {
-  // const client = mongoclient.db("curieXplore");
   try {
     const categories = await db.collection('categoriesPaysage').find().toArray();
     const actors = await db.collection('actors').findOne({ iso: req.params.id });

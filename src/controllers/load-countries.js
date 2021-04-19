@@ -1,5 +1,6 @@
 import Axios from 'axios';
-import { db, paysageUrl } from '../config';
+import { db } from '../mongo';
+import { PAYSAGE_URL } from '../config';
 
 function tranformData(data) {
   const countries = [...new Set(data.map((structure) => structure.addresses[0].countryIso3))];

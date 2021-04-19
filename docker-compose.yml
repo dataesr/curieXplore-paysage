@@ -10,7 +10,7 @@ services:
       - '.:/usr/src/app'
     networks:
       - curieXplore-paysage
-  mongo:
+  mongo-curie:
     image: mongo
     restart: always
     volumes:
