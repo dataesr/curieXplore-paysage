@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --exec babel-node src/index.js"
+    "start": "babel-node src/index.js",
+    "start:docker:dev": "sudo docker-compose -f docker-compose-dev.yml up -d --build",
+    "start:docker:prod": "sudo docker-compose -f docker-compose.yml up -d --build"
   },
   "repository": {
     "type": "git",
@@ -18,13 +20,6 @@
   },
   "homepage": "https://github.com/dataesr/curieXplore-paysage#readme",
   "dependencies": {
-    "axios": "^0.21.1",
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "mongodb": "^3.6.6",
-    "node-cron": "^3.0.0"
-  },
-  "devDependencies": {
     "@babel/cli": "^7.13.10",
     "@babel/core": "^7.13.13",
     "@babel/eslint-parser": "^7.13.10",
@@ -33,11 +28,11 @@
     "@babel/plugin-transform-runtime": "^7.13.10",
     "@babel/preset-env": "^7.13.12",
     "@babel/runtime": "^7.13.10",
+    "axios": "^0.21.1",
+    "babel-node": "0.0.1-security",
+    "cors": "^2.8.5",
     "env-cmd": "^10.1.0",
-    "eslint": "^7.23.0",
-    "eslint-config-airbnb": "^18.2.1",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jest": "^24.3.2",
-    "nodemon": "^2.0.7"
+    "express": "^4.17.1",
+    "mongodb": "^3.6.6"
   }
 }

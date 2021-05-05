@@ -18,6 +18,14 @@ services:
       - mongodb:/data/db
     networks:
       - curieXplore-paysage
+  mongo-express:
+    image: mongo-express
+    ports:
+      - 8081:8081
+    networks:
+      - curieXplore-paysage
+    depends_on:
+      - mongo-curie
 networks:
   curieXplore-paysage:
 volumes:
