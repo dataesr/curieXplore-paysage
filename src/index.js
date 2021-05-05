@@ -7,6 +7,6 @@ const app = express();
 app.get('/load-countries', loadCountries);
 app.get('/paysage/:id', findCountry);
 
-app.listen(port, () => {
-  console.log(`App is listening on port ${port}`);
+app.listen(PORT, () => {
+  console.log(`App is listening on port ${PORT}`);
 });

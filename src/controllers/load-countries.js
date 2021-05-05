@@ -34,7 +34,7 @@ async function mongoWrite(collectionName, data) {
 
 export default (req, res) => {
   console.log('Load countries from paysage to mongodb');
-  Axios.get(paysageUrl)
+  Axios.get(PAYSAGE_URL)
     .then((response) => {
       const transformedData = tranformData(response.data.Structures);
       if (mongoWrite('actors', transformedData) && mongoWrite('categories', response.data.Categories)) {

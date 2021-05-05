@@ -1,8 +1,8 @@
 import { MongoClient } from 'mongodb';
 import { MONGO_URI } from './config';
 
-const mongo = new MongoClient(
-  mongoUrl,
+export const mongo = new MongoClient(
+  MONGO_URI,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
