@@ -1,14 +1,27 @@
 # curieXplore-paysage
-## Start
+
+API link between CurieXplore and data from Paysage
+
+## Start with docker
+
+### Dev
 ```
-docker-compose up
+$ npm run start:docker:dev 
 ```
+Visit [http://localhost:3000/](http://localhost:3000)
+
+### Prod
+```
+$ npm run start:docker:prod 
+```
+
 ## Access
-### Routes
-#### Load all countries/categories in mongodb
-GET http://localhost:3000/load-countries
-#### Access to one country. Here Deutchland
-GET http://localhost:3000/paysage/DEU
+### API Routes
+#### GET /load-countries
+Load all countries/categories in mongodb
+
+#### GET /paysage/[iso_code]
+Access to one country's data
 
 ### Mongo express
-http://localhost:8081/
+Visit [http://localhost:8081](http://localhost:8081)
