@@ -5,7 +5,7 @@ services:
       context: .
     ports:
       - 3000:3000
-    command: npm run start
+    command: npm run start:dev
     volumes:
       - '.:/usr/src/app'
     networks:

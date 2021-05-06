@@ -1,13 +1,13 @@
-name: Deploy
+name: Staging deployment
 
 on:
   push:
     branches:
-      - main
+      - staging
 
 env:
-  IMAGE_NAME: curie-countries
-  IMAGE_TAG: latest
+  IMAGE_NAME: curiexplore-api
+  IMAGE_TAG: staging
 
 jobs:
 

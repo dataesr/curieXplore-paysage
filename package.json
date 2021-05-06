@@ -4,10 +4,11 @@
   "description": "Récupération des données pays de Paysage pour les rendre accessibles depuis une API",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "babel-node src/index.js",
-    "start:docker:dev": "sudo docker-compose -f docker-compose-dev.yml up -d --build",
-    "start:docker:prod": "sudo docker-compose -f docker-compose.yml up -d --build"
+    "start": "npm run build && node ./build/index.js",
+    "start:dev": "nodemon --exec babel-node src/index.js",
+    "build": "npm run clean && npm run build-babel",
+    "clean": "rm -rf build && mkdir build",
+    "build-babel": "babel -d ./build src -s"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,7 @@
     "cors": "^2.8.5",
     "env-cmd": "^10.1.0",
     "express": "^4.17.1",
-    "mongodb": "^3.6.6"
+    "mongodb": "^3.6.6",
+    "nodemon": "^2.0.7"
   }
 }
