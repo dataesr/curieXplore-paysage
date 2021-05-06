@@ -10,4 +10,4 @@
 #     name: Relaod data from paysage
 #     steps:
 #       - name: curl endpoint
-#         run: curl -X GET https://curie-countries.dataesr.ovh
+#         run: curl -X GET https://curie.staging.dataesr.ovh/api/load-countries

@@ -38,7 +38,7 @@ export default (req, res) => {
     .then((response) => {
       const transformedData = tranformData(response.data.Structures);
       if (mongoWrite('actors', transformedData) && mongoWrite('categories', response.data.Categories)) {
-        res.status(201);
+        res.status(201).json({ message: "Successfully loaded countries"});
       } else {
         res.status(500);
       }
