@@ -14,18 +14,19 @@ function tranformData(data) {
 
 async function mongoWrite(collectionName, data) {
   try {
-    const collections = await db.listCollections().toArray();
-    if (collections.find((collection) => collection.name === `${collectionName}_old`)) {
-      db.collection(`${collectionName}_old`).drop();
-      console.log(`Delete ${collectionName}_old`);
+    if (data) {
+      const collections = await db.listCollections().toArray();
+      if (collections.find((collection) => collection.name === `${collectionName}_old`)) {
+        await db.collection(`${collectionName}_old`).drop();
+        console.log(`Delete ${collectionName}_old`);
+      }
+      if (collections.find((collection) => collection.name === collectionName)) {
+        await db.collection(collectionName).rename(`${collectionName}_old`);
+        console.log(`Save old data ${collectionName}`);
+      }
+      await db.collection(collectionName).insertMany(data);
+      console.log(`Write new data ${collectionName}`);
     }
-    if (collections.find((collection) => collection.name === collectionName)) {
-      db.collection(collectionName).rename(`${collectionName}_old`);
-      console.log(`Save old data ${collectionName}`);
-    }
-    db.collection(collectionName).insertMany(data);
-    console.log(`Write new data ${collectionName}`);
-
     return;
   } catch (err) {
     console.log(err);
