@@ -1,13 +1,12 @@
 version: '3'
 services:
-  users:
+  curie-api:
     build:
       context: .
     ports:
       - 3000:3000
     command: npm run start
-    volumes:
-      - '.:/usr/src/app'
+    env_file: .env
     networks:
       - curieXplore-paysage
   mongo-curie:
