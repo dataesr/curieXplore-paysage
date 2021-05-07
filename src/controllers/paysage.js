@@ -2,7 +2,7 @@ import { db } from '../mongo';
 
 export default async (req, res) => {
   try {
-    const categories = await db.collection('categoriesPaysage').find().toArray();
+    const categories = await db.collection('categories').find().toArray();
     const actors = await db.collection('actors').findOne({ iso: req.params.id });
 
     res.setHeader('Content-Type', 'application/json');
