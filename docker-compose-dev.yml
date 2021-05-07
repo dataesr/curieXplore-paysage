@@ -1,15 +1,17 @@
 version: '3'
 services:
-  users:
+  curie-api:
     build:
       context: .
     ports:
       - 3000:3000
     command: npm run start:dev
     volumes:
-      - '.:/usr/src/app'
+      - './src:/usr/src/app/src'
     networks:
       - curieXplore-paysage
+    depends_on:
+      - mongo-curie
   mongo-curie:
     image: mongo
     container_name: mongo
