@@ -8,7 +8,7 @@ API link between CurieXplore and data from Paysage
 ```
 $ npm run start:docker:dev 
 ```
-Visit [http://localhost:3000/](http://localhost:3000)
+Visit [http://localhost:3030/api](http://localhost:3000)
 
 ### Prod
 ```
