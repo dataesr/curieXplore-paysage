@@ -6,7 +6,7 @@ services:
     ports:
       - 3030:3030
     command: npm run start
-    env_file: .env
+    env_file: .env.production
     networks:
       - curieXplore-paysage
   mongo-curie:

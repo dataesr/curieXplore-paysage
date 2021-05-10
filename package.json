@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run build && node ./build/index.js",
-    "start:dev": "env-cmd -f .env nodemon --exec babel-node src/index.js",
+    "start:dev": "env-cmd -f .env.development nodemon --exec babel-node src/index.js",
     "build": "npm run clean && npm run build-babel",
     "clean": "rm -rf build && mkdir build",
     "start:docker:dev": "docker compose -f docker-compose-dev.yml up --build",
