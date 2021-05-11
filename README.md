@@ -6,14 +6,15 @@ API link between CurieXplore and data from Paysage
 
 ### Dev
 ```
-$ npm run start:docker:dev 
+$ npm run start:docker:dev
 ```
-Visit [http://localhost:3000/](http://localhost:3000)
+Visit [http://localhost:3000/api](http://localhost:3000/api)
 
 ### Prod
 ```
-$ npm run start:docker:prod 
+$ npm run start:docker:prod
 ```
+Visit [http://localhost:3030/api](http://localhost:3030/api)
 
 ## Access
 ### API Routes
