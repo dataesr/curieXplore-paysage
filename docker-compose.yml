@@ -5,9 +5,8 @@ services:
     container_name: curiexplore-paysage_api
     environment:
       - MONGO_URI='mongodb://mongo:27017'
-      - PORT=3030
     ports:
-      - 3030:3030
+      - 3000:3000
     command: npm run start
     networks:
       - curieXplore-paysage
