@@ -1,4 +1,4 @@
-name: Staging deployment
+name: Publish Docker image and deploy on staging
 
 on:
   push:
@@ -6,52 +6,50 @@ on:
       - staging
 
 env:
-  IMAGE_NAME: curiexplore-api
-  IMAGE_TAG: staging
+  # Must match k8s deployment name
+  DEPLOYMENT: curiexplore-paysage
+  DEPLOYMENT_NAMESPACE: staging
+  DEPLOYMENT_URL: https://curie.staging.dataesr.ovh/api
 
 jobs:
-
-  build:
+  publish-ghcr:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
-
     steps:
       - uses: actions/checkout@v2
 
       - name: Log into registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+        run: docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build image
-        run: docker build . --file Dockerfile --tag $IMAGE_NAME
+        run: docker build -f Dockerfile -t ${{ github.repository }} .
+
+      - name: Get Tag
+        id: version
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/heads/}
 
       - name: Push image
         run: |
-          IMAGE_ID=ghcr.io/dataesr/$IMAGE_NAME
-
-          # Change all uppercase to lowercase
+          IMAGE_ID=ghcr.io/${{ github.repository }}
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
-
-          echo IMAGE_ID=$IMAGE_ID
-
-          docker tag $IMAGE_NAME $IMAGE_ID:$IMAGE_TAG
-          docker push $IMAGE_ID:$IMAGE_TAG
+          docker tag ${{ github.repository }} $IMAGE_ID:${{ steps.version.outputs.tag }}
+          docker push $IMAGE_ID:${{ steps.version.outputs.tag }}
 
   deploy:
     runs-on: ubuntu-latest
-    needs: ['build']
+    needs: publish-ghcr
     steps:
-
       - name: Check Out Repo
         uses: actions/checkout@v2
 
       - name: Deploy to Cluster
         id: kubectl-deploy
-        uses: dataesr/kubectl-deploy@v1
+        uses: dataesr/kubectl-deploy@v1.1
         env:
-          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG_STAGING }}
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG_DOAD }}
         with:
-          restart: 'curiexplore-api'
+          namespace: ${{ env.DEPLOYMENT_NAMESPACE }}
+          restart: ${{ env.DEPLOYMENT }}
 
       - name: Notify in slack
         run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"blocks": [{"type": "section", "text": {"type": "mrkdwn", "text": "Une nouvelle version de curiexplore-api a été déployée !"}, "accessory": {"type": "button", "style": "primary", "text": {"type": "plain_text", "text": "Voir le site", "emoji": true }, "value": "go-to-page", "url": "https://curie.dataesr.ovh/api", "action_id": "button-action" }}]}' ${{ secrets.SLACK_WEBHOOK }}
+          curl -X POST -H 'Content-type: application/json' --data '{"blocks": [{"type": "section", "text": {"type": "mrkdwn", "text": "Une nouvelle version de ${{ env.DEPLOYMENT }} a été déployée !"}, "accessory": {"type": "button", "style": "primary", "text": {"type": "plain_text", "text": "Voir le site", "emoji": true }, "value": "go-to-page", "url": ${{ env.DEPLOYMENT_URL }}, "action_id": "button-action" }}]}' ${{ secrets.SLACK_WEBHOOK }}

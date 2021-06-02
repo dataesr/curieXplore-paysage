@@ -9,4 +9,4 @@ export const mongo = new MongoClient(
   },
 );
 mongo.connect();
-export const db = mongo.db('curieXplore');
+export const db = mongo.db('curiexplore');

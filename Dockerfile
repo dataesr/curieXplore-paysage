@@ -1,6 +1,6 @@
-FROM node:alpine
-WORKDIR usr/src/app
-COPY package.json .
-RUN npm i
+FROM node:14-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --silent
 COPY . .
-EXPOSE 3030
+EXPOSE 3000

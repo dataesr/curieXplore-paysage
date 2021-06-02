@@ -1,23 +1,35 @@
 version: '3'
 services:
-  api:
-    image: ghcr.io/dataesr/curiexplore-paysage_api:v1
-    container_name: curiexplore-paysage_api
-    environment:
-      - MONGO_URI='mongodb://mongo:27017'
+  curie-api:
+    build:
+      context: .
     ports:
       - 3000:3000
-    command: npm run start
+    command: npm run start:dev
+    environment:
+      - MONGO_URI='mongodb://mongo-curie:27017'
+    volumes:
+      - './src:/app/src'
     networks:
       - curieXplore-paysage
+    depends_on:
+      - mongo-curie
   mongo-curie:
-    image: mongo:4.4.5
+    image: mongo
     container_name: mongo
     restart: always
     volumes:
       - mongodb:/data/db
     networks:
       - curieXplore-paysage
+  mongo-express:
+    image: mongo-express
+    ports:
+      - 8081:8081
+    networks:
+      - curieXplore-paysage
+    depends_on:
+      - mongo-curie
 networks:
   curieXplore-paysage:
 volumes:
