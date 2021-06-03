@@ -5,9 +5,13 @@ services:
       context: .
     ports:
       - 3000:3000
+<<<<<<< HEAD
     command: npm run start:dev
     environment:
       - MONGO_URI='mongodb://mongo-curie:27017'
+=======
+    command: npm start
+>>>>>>> 9f7a53e091278676186f7842a033ce6703397e31
     volumes:
       - './src:/app/src'
     networks:
