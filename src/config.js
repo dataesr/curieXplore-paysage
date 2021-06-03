@@ -1,3 +1,2 @@
-export const PORT = 3000;
-export const MONGO_URI = 'mongodb://mongo:27017';
+export const { MONGO_URI } = process.env;
 export const PAYSAGE_URL = 'https://paysage.mesri.fr/CurieXplore/Json/';

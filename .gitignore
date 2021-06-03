@@ -1,4 +1,6 @@
 node_modules
-
+build
 rest.http
 .idea
+
+.env.*
