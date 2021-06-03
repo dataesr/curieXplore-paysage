@@ -1,6 +1,6 @@
 {
   "name": "curiexplore-paysage",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Récupération des données pays de Paysage pour les rendre accessibles depuis une API",
   "main": "index.js",
   "scripts": {
