@@ -1,4 +1,4 @@
-name: Publish docker image, release on github and deploy
+name: Production deployment
 
 on:
   push:
@@ -9,6 +9,7 @@ env:
   # Must match k8s deployment name
   DEPLOYMENT: curiexplore-paysage
   DEPLOYMENT_URL: https://curie.dataesr.ovh/api
+  SLACK_NOTIFICATION_CHANNEL: '#curie_xplore'
 
 jobs:
   publish-ghcr:
@@ -80,6 +81,15 @@ jobs:
         with:
           restart: ${{ env.DEPLOYMENT }}
 
-      - name: Notify in slack
-        run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"blocks": [{"type": "section", "text": {"type": "mrkdwn", "text": "Une nouvelle version de $DEPLOYMENT a été déployée !"}, "accessory": {"type": "button", "style": "primary", "text": {"type": "plain_text", "text": "Voir le site", "emoji": true }, "value": "go-to-page", "url": $DEPLOYMENT_URL, "action_id": "button-action" }}]}' ${{ secrets.SLACK_WEBHOOK }}
+  notify:
+    needs: deploy
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dataesr/slack-notifier-action@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN}}
+          slack_token: ${{ secrets.SLACK_TOKEN }}
+          slack_channel: ${{ env.SLACK_NOTIFICATION_CHANNEL}}
+          deployment_url: ${{ env.DEPLOYMENT_URL }}
