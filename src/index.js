@@ -9,9 +9,9 @@ cron.schedule('* 5 * * *', loadDataJob);
 const app = express();
 
 app.use(json());
-app.get('/api', (req, res) => res.json({ message: 'Welcome to curiexplore-paysage' }));
-app.get('/api/paysage/:id', getCountries);
-app.get('/api/ec-topics/:id', getEcTopics);
+app.get('/', (req, res) => res.json({ message: 'Welcome to curiexplore-paysage' }));
+app.get('/paysage/:id', getCountries);
+app.get('/ec-topics/:id', getEcTopics);
 
 app.listen(3000, () => {
   loadDataJob();

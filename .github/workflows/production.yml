@@ -3,12 +3,13 @@ name: Production deployment
 on:
   push:
     tags:
-      - "*"
+      - "v[0-9]+.[0-9]+.[0-9]+"
 
 env:
   # Must match k8s deployment name
-  DEPLOYMENT: curiexplore-paysage
-  DEPLOYMENT_URL: https://curie.dataesr.ovh/api
+  DEPLOYMENT: curiexplore-api
+  DEPLOYMENT_NAMESPACE: curiexplore
+  DEPLOYMENT_URL: https://curiexplore-api.dataesr.ovh
   SLACK_NOTIFICATION_CHANNEL: '#curie_xplore'
 
 jobs:
@@ -18,15 +19,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Get version
-        id: version
-        run: echo ::set-output name=version::${GITHUB_REF#refs/tags/}
-
       - name: Log into registry
         run: docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build image
         run: docker build -f Dockerfile -t ${{ github.repository }} .
+
+      - name: Get Tag
+        id: version
+        run: echo ::set-output name=version::${GITHUB_REF#refs/tags/}
 
       - name: Push image
         run: |
@@ -55,8 +56,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           config_file: .github/config/changelog.js
-      - name: print changelog
-        run: echo "${{ steps.changelog.outputs.changes }}"
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -68,11 +67,10 @@ jobs:
           body: "${{ steps.changelog.outputs.changes }}"
 
   deploy:
-    name: Update production deployment
+    name: Update deployment
     runs-on: ubuntu-latest
     needs: release
     steps:
-
       - name: Check Out Repo
         uses: actions/checkout@v2
 
@@ -80,8 +78,9 @@ jobs:
         id: kubectl-deploy
         uses: dataesr/kubectl-deploy@v1.1
         env:
-          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG_DOAD }}
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG_DOAD_PROD }}
         with:
+          namespace: ${{ env.DEPLOYMENT_NAMESPACE }}
           restart: ${{ env.DEPLOYMENT }}
 
   notify:

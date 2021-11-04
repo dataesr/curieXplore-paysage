@@ -1,5 +1,5 @@
 import { MongoClient } from 'mongodb';
-import { MONGO_URI } from './config';
+import { MONGO_URI, MONGO_DBNAME } from './config';
 
 export const mongo = new MongoClient(
   MONGO_URI,
@@ -9,4 +9,4 @@ export const mongo = new MongoClient(
   },
 );
 mongo.connect();
-export const db = mongo.db('curiexplore');
+export const db = mongo.db(MONGO_DBNAME);
