@@ -7,9 +7,9 @@ on:
 
 env:
   # Must match k8s deployment name
-  DEPLOYMENT: curiexplore-paysage
-  DEPLOYMENT_NAMESPACE: staging
-  DEPLOYMENT_URL: https://curie.staging.dataesr.ovh/api
+  DEPLOYMENT: curiexplore-api
+  DEPLOYMENT_NAMESPACE: curiexplore
+  DEPLOYMENT_URL: https://curiexplore-api.staging.dataesr.ovh
   SLACK_NOTIFICATION_CHANNEL: '#curie_xplore'
 
 jobs:
@@ -48,7 +48,7 @@ jobs:
         id: kubectl-deploy
         uses: dataesr/kubectl-deploy@v1.1
         env:
-          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG_DOAD }}
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG_DOAD_STAGING }}
         with:
           namespace: ${{ env.DEPLOYMENT_NAMESPACE }}
           restart: ${{ env.DEPLOYMENT }}
